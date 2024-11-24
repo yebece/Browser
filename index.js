@@ -1,4 +1,4 @@
-const { app, screen, ipcMain, BrowserWindow} = require('electron');
+const { app, screen, ipcMain, BrowserWindow, globalShortcut} = require('electron');
 
 try {
     require('electron-reloader')(module)
@@ -36,3 +36,24 @@ const createWindow = () => {
 
 app.whenReady().then(createWindow)
 app.on('window-all-closed', () => app.quit());
+
+app.on("ready", () => {
+    const shortcuts = {
+        "CommandOrControl+W": 'close-tab',
+        "CommandOrControl+T": 'new-tab',
+        "CommandOrControl+Left": 'go-back',
+        "CommandOrControl+Right": 'go-forward',
+        "CommandOrControl+Option+I": 'inspect',
+        "CommandOrControl+R": 'reload-selected-page',
+        "CommandOrControl+S": 'toggle-is-vert-or-horiz'
+    };
+
+    for (const [key, message] of Object.entries(shortcuts)) {
+        globalShortcut.register(key, () => {
+            const focusedWindow = BrowserWindow.getFocusedWindow();
+            if (focusedWindow) {
+                focusedWindow.webContents.send(message);
+            }
+        });
+    }
+});

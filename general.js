@@ -37,12 +37,5 @@ function toggleIsVertOrHoriz() {
     }
 }
 
-document.addEventListener('keydown', function(event) {
-    if (event.key === 's' && (event.metaKey || event.ctrlKey)) {
-        event.preventDefault();
-        toggleIsVertOrHoriz();
-    }
-});
-
 
 console.log(localStorage.getItem("isVertOrHoriz"));

@@ -1,3 +1,5 @@
+const ipc = require('electron').ipcRenderer;
+
 var tabs = [
     {
         url: "",
@@ -53,50 +55,6 @@ setTimeout(() => {
     }
 }, 11);
 
-document.addEventListener('keydown', function(event) {
-    if (event.key === 't' && (event.metaKey || event.ctrlKey)) {
-        event.preventDefault();
-        createNewTab();
-        updateTabs();
-    }
-});
-
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        const activeInput = document.activeElement;
-        if (activeInput && activeInput.tagName === 'INPUT') {
-            const tabElement = activeInput.closest('.tab');
-            if (tabElement) {
-                const tabId = parseInt(tabElement.id.replace('tab', ''));
-                const webviewElement = document.getElementById(`webview${tabId}`);
-                const tabObj = tabs.find(tab => tab.tabID === tabId);
-                if (webviewElement && tabObj) {
-                    webviewElement.shadowRoot.children[1].style = "flex: 1 1 auto; background-color: #fff; width: 100%; height: 100%; border: 0px;";
-                    if (activeInput.value.includes("http://") || activeInput.value.includes("https://") || activeInput.value.includes("chrome://")) {
-                        webviewElement.src = activeInput.value;
-                        tabObj.url = activeInput.value;
-                    } else if (!activeInput.value.includes(" ") && activeInput.value.includes(".")) {
-                        webviewElement.src = `http://${activeInput.value}`;
-                        tabObj.url = `http://${activeInput.value}`;
-                    } else {
-                        tabObj.isGoogleSearch = true;
-                        tabObj.googleSearchQuery = activeInput.value;
-                        const googleValue = activeInput.value.replace(" ", '+');
-                        webviewElement.src = `https://www.google.com/search?q=${googleValue}`;
-                        tabObj.url = `https://www.google.com/search?q=${googleValue}`;
-                    }
-                    activeInput.blur(); // Unfocus from the input when page starts to load
-                    tabObj.isTabFocused = false;
-                }
-            }
-        }
-    }
-});
-
-document.addEventListener("mouseup", function(e) {
-    closeTab(e);
-});
-
 document.addEventListener("mousedown", function(e) {
     selectTab(e);
 });
@@ -137,23 +95,6 @@ function selectTab(e) {
                 }, 10);
             }
         }
-    }
-}
-
-function closeTab(e) {
-    const tabElement = e.target.closest(".tab-close");
-    if (tabElement) {
-        const tabId = parseInt(tabElement.closest(".tab").id.replace('tab', ''));
-        const nextTab = tabs.filter(tab => tab.tabID > tabId).sort((a, b) => a.tabID - b.tabID)[0];
-        if (nextTab) {
-            nextTab.isTabSelected = true;
-        } else {
-            const prevTab = tabs.filter(tab => tab.tabID < tabId).sort((a, b) => b.tabID - a.tabID)[0];
-            if (prevTab) {
-                prevTab.isTabSelected = true;
-            }
-        }
-        tabs = tabs.filter(tab => tab.tabID !== tabId);
     }
 }
 
@@ -212,6 +153,7 @@ function updateTabs() {
             // Create and append webview
             const webviewElement = document.createElement('webview');
             webviewElement.id = `webview${tab.tabID}`;
+            webviewElement.setAttribute('nodeintegration', '');
             webviewElement.src = tab.url;
             webviewElement.style.display = 'none';
             webviewElement.addEventListener('did-finish-load', () => {
