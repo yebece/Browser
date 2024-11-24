@@ -1,0 +1,23 @@
+{
+  "name": "browser",
+  "version": "1.0.0",
+  "description": "An Electron based browser.",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "browser"
+  ],
+  "author": "Yusuf Berk Çekiç",
+  "license": "MIT",
+  "devDependencies": {
+    "@electron-forge/publisher-github": "^7.5.0",
+    "electron": "^33.2.0"
+  },
+  "dependencies": {
+    "electron-reloader": "^1.2.3",
+    "electron-store": "^10.0.0"
+  }
+}
