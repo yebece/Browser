@@ -26,6 +26,46 @@ ipc.on("toggle-is-vert-or-horiz", () => {
     toggleIsVertOrHoriz();
 });
 
+ipc.on("select-tab-1", () => {
+    selectFirstTab();
+});
+
+ipc.on("select-tab-2", () => {
+    selectSecondTab();
+}); 
+
+ipc.on("select-tab-3", () => {
+    selectThirdTab();
+});
+
+ipc.on("select-tab-4", () => {
+    selectFourthTab();
+});
+
+ipc.on("select-tab-5", () => {
+    selectFifthTab();
+});
+
+ipc.on("select-tab-6", () => {
+    selectSixthTab();
+});
+
+ipc.on("select-tab-7", () => {
+    selectSeventhTab();
+});
+
+ipc.on("select-tab-8", () => {
+    selectEighthTab();
+});
+
+ipc.on("select-tab-9", () => {
+    selectNinthTab();
+});
+
+ipc.on("select-tab-10", () => {
+    selectTenthTab();
+});
+
 document.addEventListener("mouseup", function(e) {
     closeTab(e);
 });
@@ -134,15 +174,18 @@ document.addEventListener('keydown', function(event) {
                     if (activeInput.value.includes("http://") || activeInput.value.includes("https://") || activeInput.value.includes("chrome://")) {
                         webviewElement.src = activeInput.value;
                         tabObj.url = activeInput.value;
+                        tabObj.title = activeInput.value;
                     } else if (!activeInput.value.includes(" ") && activeInput.value.includes(".")) {
                         webviewElement.src = `http://${activeInput.value}`;
                         tabObj.url = `http://${activeInput.value}`;
+                        tabObj.title = activeInput.value;
                     } else {
                         tabObj.isGoogleSearch = true;
                         tabObj.googleSearchQuery = activeInput.value;
                         const googleValue = activeInput.value.replace(" ", '+');
                         webviewElement.src = `https://www.google.com/search?q=${googleValue}`;
                         tabObj.url = `https://www.google.com/search?q=${googleValue}`;
+                        tabObj.title = `Search: ${googleValue}`;
                     }
                     activeInput.blur(); // Unfocus from the input when page starts to load
                     tabObj.isTabFocused = false;
@@ -151,3 +194,71 @@ document.addEventListener('keydown', function(event) {
         }
     }
 });
+
+function selectTabByIndex(index) {
+    if (index < 0 || index > 9) {
+        console.error("Index out of bounds. Please select an index between 0 and 9.");
+        return;
+    }
+
+    const tabElement = document.querySelector(`.tabs .tab:nth-child(${index + 1})`);
+    if (tabElement) {
+        const tabId = parseInt(tabElement.id.replace('tab', ''));
+        const tabObj = tabs.find(tab => tab.tabID === tabId);
+        tabs.forEach(tab => {
+            tab.isTabSelected = false;
+            const tabElementInput = document.getElementById(`tab${tab.tabID}`).querySelector('input');
+            tabElementInput.blur();
+        });
+        if (tabObj) {
+            tabObj.isTabSelected = true;
+            const webviewElement = document.getElementById(`webview${tabId}`);
+            if (webviewElement) {
+                const inputElement = tabElement.querySelector('input');
+                if (tabObj.url == "") {
+                    inputElement.focus();
+                }
+            }
+        }
+    }
+}
+
+function selectFirstTab() {
+    selectTabByIndex(0);
+}
+
+function selectSecondTab() {
+    selectTabByIndex(1);
+}
+
+function selectThirdTab() {
+    selectTabByIndex(2);
+}
+
+function selectFourthTab() {
+    selectTabByIndex(3);
+}
+
+function selectFifthTab() {
+    selectTabByIndex(4);
+}
+
+function selectSixthTab() {
+    selectTabByIndex(5);
+}
+
+function selectSeventhTab() {
+    selectTabByIndex(6);
+}
+
+function selectEighthTab() {
+    selectTabByIndex(7);
+}
+
+function selectNinthTab() {
+    selectTabByIndex(8);
+}
+
+function selectTenthTab() {
+    selectTabByIndex(9);
+}

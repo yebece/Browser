@@ -55,7 +55,7 @@ setTimeout(() => {
     }
 }, 11);
 
-document.addEventListener("mousedown", function(e) {
+document.addEventListener("mouseup", function(e) {
     selectTab(e);
 });
 
@@ -154,6 +154,7 @@ function updateTabs() {
             const webviewElement = document.createElement('webview');
             webviewElement.id = `webview${tab.tabID}`;
             webviewElement.setAttribute('nodeintegration', '');
+            webviewElement.setAttribute('allowpopups', 'true');
             webviewElement.src = tab.url;
             webviewElement.style.display = 'none';
             webviewElement.addEventListener('did-finish-load', () => {
@@ -181,13 +182,6 @@ function updateTabs() {
         if (webviewElement) {
             webviewElement.style.display = tab.isTabSelected ? 'unset' : 'none';
         }
-    });
-
-    // Iterate through each tab and update the readOnly property of the input element
-    tabs.forEach(tab => {
-        const tabElement = document.getElementById(`tab${tab.tabID}`);
-        const tabObj = tabs.find(tab => tab.tabID === tab.tabID);
-        const inputElement = tabElement.querySelector('input');
     });
 }
 
