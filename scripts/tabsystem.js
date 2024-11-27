@@ -155,7 +155,7 @@ function updateTabs() {
             webviewElement.id = `webview${tab.tabID}`;
             webviewElement.setAttribute('nodeintegration', '');
             webviewElement.setAttribute('allowpopups', 'true');
-            webviewElement.setAttribute('preload', 'gesture.js');
+            webviewElement.setAttribute('preload', 'scripts/gesture.js');
             webviewElement.setAttribute('enableblinkfeatures', 'PreciseMemoryInfo, CSSVariables');
             webviewElement.src = tab.url;
             webviewElement.style.display = 'none';
