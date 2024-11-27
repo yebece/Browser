@@ -13,6 +13,13 @@
     z-index: -1;
 }
 
+@media (prefers-color-scheme: dark) {
+    .contentarea {
+        background-color: rgba(30, 30, 30, 0.5);
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+}
+
 .contentarea webview {
     position: absolute;
     top: 0;

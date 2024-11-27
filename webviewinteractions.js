@@ -2,6 +2,12 @@ ipc.on("close-tab", () => {
     closeSelectedTab();
 });
 
+ipc.on("swipe-coordinates", (event, arg) => {
+    console.log(`Swipe coordinates: (${arg[0]}, ${arg[1]})`);
+    coordinates = arg;
+    checkSwipeCoordinates();
+});
+
 ipc.on("new-tab", () => {
     createNewTab();
 });
@@ -65,6 +71,28 @@ ipc.on("select-tab-9", () => {
 ipc.on("select-tab-10", () => {
     selectTenthTab();
 });
+
+ipc.on("unselect-all-tabs", () => {
+    unselectAllTabs();
+});
+
+var coordinates = [0, 0];
+var gonnaGoFurther = true;
+
+function checkSwipeCoordinates() {
+ if(coordinates[0] > 50 && gonnaGoFurther){
+    goBack();
+    gonnaGoFurther = false;
+ } else if (coordinates[0] < -50 && gonnaGoFurther) {
+    goForward();
+    gonnaGoFurther = false;ß
+ }
+
+
+ if(coordinates[0] < 10 && coordinates[0] > -10){
+    gonnaGoFurther = true;
+ }
+}
 
 document.addEventListener("mouseup", function(e) {
     closeTab(e);
@@ -262,3 +290,18 @@ function selectNinthTab() {
 function selectTenthTab() {
     selectTabByIndex(9);
 }
+
+function detectTwoFingerTouch(event) {
+    if (event.touches && event.touches.length === 2) {
+        console.log('Two finger touch detected');
+        // Add your custom logic here
+    }
+}
+
+function unselectAllTabs() {
+    tabs.forEach(tab => {
+        tab.isTabSelected = false;
+        const tabElementInput = document.getElementById(`tab${tab.tabID}`).querySelector('input');
+        tabElementInput.blur();
+    });
+}   

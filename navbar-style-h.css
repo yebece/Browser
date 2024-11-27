@@ -1,7 +1,35 @@
 /* Variables */
 :root {
+    /* Light mode */
     --body-font-color: rgba(0, 0, 0, 0.8);
     --unfocused-color: rgba(0, 0, 0, 0.45);
+    --background-color: #fff;
+    --hover-background: rgba(0, 0, 0, 0.04);
+    --active-background: rgba(0, 0, 0, 0.08);
+    --border-color: rgba(0, 0, 0, 0.05);
+    --menu-background: rgba(248, 248, 248, 1);
+    --menu-shadow: rgba(0, 0, 0, 0.12);
+    --menu-hover: rgba(0, 0, 0, 0.05);
+    --menu-active: rgba(0, 0, 0, 0.075);
+    --menu-text: rgba(0, 0, 0, 0.75);
+    --shortcut-color: rgba(0, 0, 0, 0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --body-font-color: rgba(255, 255, 255, 0.8);
+        --unfocused-color: rgba(255, 255, 255, 0.45);
+        --background-color: #1e1e1e;
+        --hover-background: rgba(255, 255, 255, 0.1);
+        --active-background: rgba(255, 255, 255, 0.15);
+        --border-color: rgba(255, 255, 255, 0.1);
+        --menu-background: rgba(45, 45, 45, 0.95);
+        --menu-shadow: rgba(0, 0, 0, 0.3);
+        --menu-hover: rgba(255, 255, 255, 0.1);
+        --menu-active: rgba(255, 255, 255, 0.15);
+        --menu-text: rgba(255, 255, 255, 0.75);
+        --shortcut-color: rgba(255, 255, 255, 0.25);
+    }
 }
 
 /* General Styles */
@@ -90,14 +118,14 @@ input {
 
 .tab-reload:hover svg,
 .tab-close:hover svg {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: var(--hover-background);
     border-radius: 4px;
     transition: 0.1s all;
 }
 
 .tab-reload:active svg,
 .tab-close:active svg {
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: var(--active-background);
     border-radius: 4px;
     transition: 0.1s all;
 }
@@ -123,7 +151,7 @@ input {
     margin-top: -1px;
     border: none;
     outline: none;
-    background: rgba(0, 0, 0, 0.0);
+    background: transparent;
     border-radius: 12px;
     backdrop-filter: sepia(90%);
     backdrop-filter: saturate(80%);
@@ -137,7 +165,7 @@ input {
 .tab-focused {
     width: 256px !important;
     color: var(--body-font-color);
-    background-color: #fff;
+    background-color: var(--background-color);
     flex: 256px 0 auto;
 }
 
@@ -156,7 +184,7 @@ input {
     flex-direction: row;
     gap: 2px;
     height: 36px;
-    border-left: 1px solid rgba(0, 0, 0, 0.05);
+    border-left: 1px solid var(--border-color);
     -webkit-app-region: no-drag;
     position: fixed;
     right: 8px;
@@ -176,12 +204,12 @@ input {
 }
 
 .nav-button:hover {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: var(--hover-background);
     transition: 0.1s all;
 }
 
 .nav-button:active {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: var(--active-background);
     transition: 0.05s all;
 }
 
@@ -196,14 +224,15 @@ input {
     padding: 4px;
     box-sizing: border-box;
     border-radius: 8px;
-    background-color: rgba(248, 248, 248, 1);
-    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.12);
+    background-color: var(--menu-background);
+    box-shadow: 0 2px 24px var(--menu-shadow);
     backdrop-filter: blur(40px);
     position: fixed;
     top: 48px;
     right: 16px;
     z-index: 1000;
 }
+
 .nav-menu::before {
     width: 100%;
     content: "";
@@ -226,7 +255,6 @@ input {
     height: 40px;
 }
 
-
 .nav-button:hover .nav-menu {
     display: flex;
 }
@@ -243,14 +271,13 @@ input {
     transition: 0.1s all;
 }
 
-
 .nav-menu-item:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: var(--menu-hover);
     transition: 0.1s all;
 }
 
 .nav-menu-item:active {
-    background-color: rgba(0, 0, 0, 0.075);
+    background-color: var(--menu-active);
     transition: 0.05s all;
 }
 
@@ -259,14 +286,14 @@ input {
     flex-direction: row;
     align-items: center;
     gap: 4px;
-    color: rgba(0, 0, 0, 0.75);
+    color: var(--menu-text);
     font-size: 14px;
 }
 
 .nav-menu-item div svg {
     width: 14px;
     height: 14px;
-    fill: rgba(0, 0, 0, 0.75);
+    fill: var(--menu-text);
     padding: 4px;
 }
 
@@ -278,9 +305,9 @@ input {
     flex-direction: row;
     align-items: center;
     gap: 4px;
-    color: rgba(0, 0, 0, 0.25);
+    color: var(--shortcut-color);
 }
 
 .sc svg path {
-    fill: rgba(0, 0, 0, 0.25);
+    fill: var(--shortcut-color);
 }

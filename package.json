@@ -29,6 +29,7 @@
   "dependencies": {
     "electron-reloader": "^1.2.3",
     "electron-squirrel-startup": "^1.0.1",
-    "electron-store": "^10.0.0"
+    "electron-store": "^10.0.0",
+    "hapticjs": "^1.0.7"
   }
 }

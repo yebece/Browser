@@ -1,8 +1,9 @@
-const { app, screen, ipcMain, BrowserWindow, globalShortcut} = require('electron');
+const { app, screen, ipcMain, BrowserWindow, globalShortcut } = require('electron');
+const path = require('path');
 
 try {
     require('electron-reloader')(module)
-  } catch (_) {}
+} catch (_) {}
 
 const createWindow = () => {
 
@@ -14,21 +15,22 @@ const createWindow = () => {
         height: height / 1.25,
         minHeight: 400,
         title: "Browser",
-        icon: __dirname + '/browser.icns',
+        icon: path.join(__dirname, 'browser.icns'),
         titleBarStyle: 'hidden',
         titleBarOverlay: true,
         trafficLightPosition: { x: 20, y: 20 },
         webPreferences: {
-            experimentalFeatures: true, 
+            experimentalFeatures: true,
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true, // use remote module
-            webviewTag: true
-        }, 
+            enableRemoteModule: true,
+            webviewTag: true,
+            //preload: path.join(__dirname, 'gesture.js') // Preload gesture.js
+        },
         webSecurity: false,
         vibrancy: 'popover',
         visualEffectState: 'followWindow',
-          backgroundColor:'#00000000'
+        backgroundColor: '#00000000'
     });
 
     window.loadFile('window.html');
@@ -36,6 +38,11 @@ const createWindow = () => {
 
 app.whenReady().then(createWindow)
 app.on('window-all-closed', () => app.quit());
+
+
+ipcMain.on('gesture-change', (event, data) => {
+    console.log(`Gesture change: (${data.x}, ${data.y})`);
+});
 
 app.on("ready", () => {
     const shortcuts = {
@@ -55,7 +62,8 @@ app.on("ready", () => {
         "CommandOrControl+7": 'select-tab-7',
         "CommandOrControl+8": 'select-tab-8',
         "CommandOrControl+9": 'select-tab-9',
-        "CommandOrControl+0": 'select-tab-10'
+        "CommandOrControl+0": 'select-tab-10',
+        "CommandOrControl+=": 'unselect-all-tabs'
     };
 
     for (const [key, message] of Object.entries(shortcuts)) {
@@ -66,4 +74,12 @@ app.on("ready", () => {
             }
         });
     }
+
+    ipcMain.on('swipe-coordinates', (event, arg) => {
+        console.log(`Swipe coordinates: (${arg[0]}, ${arg[1]})`);
+        const focusedWindow = BrowserWindow.getFocusedWindow();
+        if (focusedWindow) {
+            focusedWindow.webContents.send('swipe-coordinates', arg);
+        }
+    })
 });
