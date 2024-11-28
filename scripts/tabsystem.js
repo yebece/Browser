@@ -115,6 +115,7 @@ function updateTabs() {
     const tabContainer = document.querySelector('.tabs');
     const tabElements = tabContainer.querySelectorAll('.tab');
     const webviewContainer = document.querySelector('.contentarea');
+    const loadingIndicator = document.querySelector('.loadingIndicator');
 
     // Remove tabs and webviews that are no longer in the tabs array
     tabElements.forEach(tabElement => {
@@ -173,10 +174,25 @@ function updateTabs() {
         // Add or remove 'tab-focused' class based on isTabSelected
         if (tab.isTabSelected) {
             tabElement.classList.add('tab-focused');
+            const webview = document.getElementById(`webview${tab.tabID}`);
+            if (webview && webview.isLoading()) {
+                loadingIndicator.style.opacity = "0.5";
+                loadingIndicator.style.animation = "loading 0.4s ease-in-out infinite";
+            } else {
+                loadingIndicator.style.animation = "unset";
+                loadingIndicator.style.opacity = "0";
+            }
         } else {
             tabElement.classList.remove('tab-focused');
         }
     });
+
+    // Check if no tab is selected
+    const hasSelectedTab = tabs.some(tab => tab.isTabSelected);
+    if (!hasSelectedTab) {
+        loadingIndicator.style.animation = "unset";
+        loadingIndicator.style.opacity = "0";
+    }
 
     // Update webview display based on selected tab
     tabs.forEach(tab => {

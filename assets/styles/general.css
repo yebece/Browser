@@ -1,0 +1,36 @@
+.loadingIndicator {
+    position: fixed;
+    top: 14px;
+    left: 13px;
+    width: 68px;
+    height: 28px;
+    border-radius: 18px;
+    background-color: rgba(0, 0, 0, 0.1);
+    /*animation: loading 0.4s ease-in-out infinite;*/
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0;
+}
+
+@keyframes loading {
+    0% {
+        top: 14px;
+        left: 13px;
+        width: 68px;
+        height: 28px;
+        opacity: 0.5;
+    }
+    50% {
+        top: 10px;
+        left: 9px;
+        width: 76px;
+        height: 36px;
+        opacity: 0.75;
+    }
+    100% {
+        top: 14px;
+        left: 13px;
+        width: 68px;
+        height: 28px;
+        opacity: 0.5;
+    }
+}
