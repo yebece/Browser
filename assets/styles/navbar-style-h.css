@@ -178,6 +178,10 @@ input {
     fill: var(--body-font-color);
 }
 
+.sidebar-resize-handle {
+    display: none;
+}
+
 /* Navigation Buttons */
 .nav-buttons {
     display: flex;

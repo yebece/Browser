@@ -13,6 +13,7 @@
     --menu-active: rgba(0, 0, 0, 0.075);
     --menu-text: rgba(0, 0, 0, 0.75);
     --shortcut-color: rgba(0, 0, 0, 0.25);
+    --tab-width: 196px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -53,7 +54,7 @@ input {
 
 /* Topbar */
 .topbar {
-    width: 196px;
+    width: var(--tab-width);
     height: 100%;
     position: fixed;
     top: 8px;
@@ -66,7 +67,7 @@ input {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    width: 204px;
+    width: calc(var(--tab-width) + 8px);
     max-height: calc(100vh - 108px);
     position: relative;
     top: 44px;
@@ -81,7 +82,7 @@ input {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 196px;
+    width: var(--tab-width);
     height: 36px;
     border-radius: 12px;
     color: var(--unfocused-color);
@@ -168,6 +169,39 @@ input {
     fill: var(--body-font-color);
 }
 
+.sidebar-resize-handle {
+    width: 8px;
+    height: 100%;
+    position: fixed;
+    z-index: -1000;
+    left: calc(var(--tab-width) + 8px);
+    top: 0px;
+    -webkit-app-region: no-drag;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: col-resize;
+}
+
+.sidebar-resize-handle:hover {
+    padding-right: 10px;
+    z-index: 10000;
+}
+.sidebar-resize-handle-inner {
+    width: 4px;
+    height: 60px;
+    background-color: var(--border-color);
+    border-radius: 2px;
+    opacity: 0;
+    transition: 0.1s all;
+}
+
+.sidebar-resize-handle:hover .sidebar-resize-handle-inner {
+    opacity: 1;
+    transition: 0.1s all;
+    transition-delay: 0.2s;
+}
+
 /* Navigation Buttons */
 .nav-buttons {
     display: flex;
@@ -176,7 +210,7 @@ input {
     height: 36px;
     -webkit-app-region: no-drag;
     position: fixed;
-    left: 166px;
+    left: calc(var(--tab-width) - 30px);
     top: 8px;
     padding-left: 4px;
 }
@@ -211,7 +245,7 @@ input {
 }
 
 #vert-newtab {
-    width: 196px;
+    width: var(--tab-width);
     height: 36px;
     display: flex;
     color: var(--unfocused-color);
@@ -242,7 +276,7 @@ input {
 }
 
 .nav-menu {
-    width: 196px;
+    width: var(--tab-width);
     display: none;
     flex-direction: column;
     padding: 4px;
@@ -251,9 +285,10 @@ input {
     background-color: var(--menu-background);
     box-shadow: 0 2px 24px var(--menu-shadow);
     backdrop-filter: blur(40px);
+    z-index: 1000;
     position: fixed;
     top: 48px;
-    left: 168px;
+    left: calc(var(--tab-width) - 28px);
     -webkit-app-region: no-drag;
 }
 

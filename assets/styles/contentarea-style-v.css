@@ -1,5 +1,5 @@
 .contentarea {
-    width: calc(100% - 220px);
+    width: calc(100% - var(--tab-width) - 24px);
     height: calc(100% - 16px);
 
     position: fixed;
