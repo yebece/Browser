@@ -18,7 +18,7 @@ const createWindow = () => {
         icon: path.join(__dirname, 'browser.icns'),
         titleBarStyle: 'hidden',
         titleBarOverlay: true,
-        trafficLightPosition: { x: 20, y: 20 },
+        trafficLightPosition: { x: 20, y: 19 },
         webPreferences: {
             experimentalFeatures: true,
             nodeIntegration: true,

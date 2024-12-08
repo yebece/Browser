@@ -1,6 +1,6 @@
 .loadingIndicator {
     position: fixed;
-    top: 14px;
+    top: 13px;
     left: 13px;
     width: 68px;
     height: 28px;
@@ -13,24 +13,32 @@
 
 @keyframes loading {
     0% {
-        top: 14px;
+        top: 13px;
         left: 13px;
         width: 68px;
         height: 28px;
         opacity: 0.5;
     }
     50% {
-        top: 10px;
+        top: 9px;
         left: 9px;
         width: 76px;
         height: 36px;
         opacity: 0.75;
     }
     100% {
-        top: 14px;
+        top: 13px;
         left: 13px;
         width: 68px;
         height: 28px;
         opacity: 0.5;
     }
+}
+
+input::selection {
+    background-color: #B4D5FE;
+}
+
+.invisible::selection {
+    background-color: transparent;
 }
