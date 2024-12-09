@@ -59,6 +59,20 @@ document.addEventListener("mouseup", function(e) {
     selectTab(e);
 });
 
+document.addEventListener("mousedown", function(e) {
+    inputActive(e);
+});
+
+function inputActive(e){
+    const tabElement = e.target.closest(".tab");
+    const selectedTabInput = tabElement.querySelector("input");
+    const tabObj = tabs.find(tab => tab.tabID === parseInt(tabElement.id.replace('tab', '')));
+
+    if(tabObj.isTabSelected && !tabObj.isTabFocused){
+        selectedTabInput.classList.add("invisible");
+    }
+}  
+
 function selectTab(e) {
     const tabElement = e.target.closest(".tab");
     const selectedTabInput = tabElement.querySelector("input");
@@ -89,6 +103,7 @@ function selectTab(e) {
                 selectedTab.isTabFocused = true;
                 selectedTabInput.readOnly = false;
                 selectedTabInput.value = selectedTab.url;
+                selectedTabInput.classList = "";
 
                 setTimeout(() => {
                     selectedTabInput.select();
@@ -172,19 +187,30 @@ function updateTabs() {
         }
 
         // Add or remove 'tab-focused' class based on isTabSelected
+
         if (tab.isTabSelected) {
             tabElement.classList.add('tab-focused');
             const webview = document.getElementById(`webview${tab.tabID}`);
-            if (webview && webview.isLoading()) {
-                loadingIndicator.style.opacity = "0.5";
-                loadingIndicator.style.animation = "loading 0.4s ease-in-out infinite";
-            } else {
+            
+            try {
+                if (webview && typeof webview.isLoading === 'function') {
+                    if (webview.isLoading()) {
+                        loadingIndicator.style.opacity = "0.5";
+                        loadingIndicator.style.animation = "loading 0.4s ease-in-out infinite";
+                    } else {
+                        loadingIndicator.style.animation = "unset";
+                        loadingIndicator.style.opacity = "0";
+                    }
+                }
+            } catch (error) {
+                console.log("Error checking webview loading state:", error);
                 loadingIndicator.style.animation = "unset";
                 loadingIndicator.style.opacity = "0";
             }
         } else {
             tabElement.classList.remove('tab-focused');
         }
+        
     });
 
     // Check if no tab is selected

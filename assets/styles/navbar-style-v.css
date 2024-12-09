@@ -184,7 +184,6 @@ input {
 }
 
 .sidebar-resize-handle:hover {
-    padding-right: 10px;
     z-index: 10000;
 }
 .sidebar-resize-handle-inner {
@@ -276,7 +275,7 @@ input {
 }
 
 .nav-menu {
-    width: var(--tab-width);
+    width: 200px;
     display: none;
     flex-direction: column;
     padding: 4px;

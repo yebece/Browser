@@ -53,9 +53,11 @@ sidebarResizeHandle.addEventListener('mousedown', (e) => {
     isResizing = true;
     initialX = e.clientX;
     initialWidth = parseInt(getComputedStyle(root).getPropertyValue('--tab-width'));
-    
+    sidebarResizeHandle.style.paddingRight = "200px";
+
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', () => {
+        sidebarResizeHandle.style.paddingRight = "0px";
         isResizing = false;
         document.removeEventListener('mousemove', handleMouseMove);
     });
