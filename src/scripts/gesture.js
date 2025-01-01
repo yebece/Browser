@@ -26,7 +26,6 @@ window.addEventListener("gesturechange", function (e) {
   
   //console.log(`Swipe coordinates: (${e.pageX}, ${e.pageY})`);
   coordinates = [e.pageX, e.pageY];
-  sendSwipeCoordinates();
 });
 
 function sendSwipeCoordinates() {

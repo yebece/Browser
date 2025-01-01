@@ -79,13 +79,20 @@ ipc.on("unselect-all-tabs", () => {
 var coordinates = [0, 0];
 var gonnaGoFurther = true;
 
+
 function checkSwipeCoordinates() {
+    const selectedTab = tabs.find(tab => tab.isTabSelected);
+    const webviewElement = document.getElementById(`webview${selectedTab.tabID}`).parentElement;
+    if(Math.abs(coordinates[0]) < 50){
+        webviewElement.style.transform = `scale(${1 - Math.abs(coordinates[0])/1000})`;
+    }
+
  if(coordinates[0] > 50 && gonnaGoFurther){
     goBack();
     gonnaGoFurther = false;
  } else if (coordinates[0] < -50 && gonnaGoFurther) {
     goForward();
-    gonnaGoFurther = false;ß
+    gonnaGoFurther = false;
  }
 
 
