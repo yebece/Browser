@@ -73,10 +73,13 @@ input {
     top: 44px;
     left: 0px;
     overflow-y: scroll;
+    overflow-x: hidden;
     padding-bottom: 12px;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
     -webkit-app-region: no-drag;
 }
+
+.tabs::-webkit-scrollbar { display: none; }
 
 .tab {
     display: flex;
