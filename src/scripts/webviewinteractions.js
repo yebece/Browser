@@ -83,9 +83,10 @@ var gonnaGoFurther = true;
 function checkSwipeCoordinates() {
     const selectedTab = tabs.find(tab => tab.isTabSelected);
     const webviewElement = document.getElementById(`webview${selectedTab.tabID}`).parentElement;
+    /*
     if(Math.abs(coordinates[0]) < 50){
         webviewElement.style.transform = `scale(${1 - Math.abs(coordinates[0])/1000})`;
-    }
+    }*/
 
  if(coordinates[0] > 50 && gonnaGoFurther){
     goBack();
